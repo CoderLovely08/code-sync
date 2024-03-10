@@ -7,5 +7,5 @@ export const initSocket = async () => {
     timeout: 10000,
     transports: ["websocket"],
   };
-  return io('http://localhost:5001/', options);
+  return io('https://code-sync-backend-api-5a72177b25c8.herokuapp.com/', options);
 };
