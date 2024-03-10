@@ -142,7 +142,7 @@ const EditorPage = () => {
       url: "https://code-compiler.p.rapidapi.com/v2",
       headers: {
         "content-type": "application/x-www-form-urlencoded",
-        "X-RapidAPI-Key": process.env.REACT_APP_API_KEY,
+        "X-RapidAPI-Key": '5b043e0a52mshb9b678342220f20p197e9ejsn73822ed353ab',
         "X-RapidAPI-Host": "code-compiler.p.rapidapi.com",
       },
       data: encodedParams,
@@ -192,7 +192,7 @@ const EditorPage = () => {
 
   return (
     <div className="mainWrap">
-      <div className="asideWrap">
+      {/* <div className="asideWrap">
         <div className="asideInner">
           <div className="logo">
             <img className="logoImage" src="/code-sync.png" alt="logo" />
@@ -234,7 +234,7 @@ const EditorPage = () => {
         <button className="btn leaveBtn" onClick={leaveRoom}>
           Leave
         </button>
-      </div>
+      </div> */}
 
       <div className="editorWrap">
         <Editor
@@ -267,7 +267,7 @@ const EditorPage = () => {
         ></textarea>
       </div>
 
-      <div className="chatWrap">
+      {/* <div className="chatWrap">
         <textarea
           id="chatWindow"
           className="chatArea textarea-style"
@@ -286,7 +286,7 @@ const EditorPage = () => {
             Send
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
