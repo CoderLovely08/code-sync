@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import ACTIONS from "../Actions";
 import Client from "../components/Client";
 import Editor from "../components/Editor";
+import Navbar from "../components/Navbar";
 import { initSocket } from "../socket";
 import {
   Navigate,
@@ -11,6 +12,7 @@ import {
 } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
+import Drawer from "../components/Drawer";
 
 const EditorPage = () => {
   const socketRef = useRef(null);
@@ -19,6 +21,7 @@ const EditorPage = () => {
   const reactNavigator = useNavigate();
   const { roomId } = useParams();
   const [clients, setClients] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const init = async () => {
@@ -105,10 +108,10 @@ const EditorPage = () => {
     inputArea.disabled = false;
     const inputLabel = document.getElementById("inputLabel");
     const outputLabel = document.getElementById("outputLabel");
-    inputLabel.classList.remove("notClickedLabel");
-    inputLabel.classList.add("clickedLabel");
-    outputLabel.classList.remove("clickedLabel");
-    outputLabel.classList.add("notClickedLabel");
+    inputLabel.classList.remove("bg-gray-600");
+    inputLabel.classList.add("bg-violet-600");
+    outputLabel.classList.add("bg-gray-600");
+    outputLabel.classList.remove("bg-violet-600");
   };
 
   const outputClicked = () => {
@@ -119,17 +122,17 @@ const EditorPage = () => {
     inputArea.disabled = true;
     const inputLabel = document.getElementById("inputLabel");
     const outputLabel = document.getElementById("outputLabel");
-    inputLabel.classList.remove("clickedLabel");
-    inputLabel.classList.add("notClickedLabel");
-    outputLabel.classList.remove("notClickedLabel");
-    outputLabel.classList.add("clickedLabel");
+    inputLabel.classList.add("bg-gray-600");
+    inputLabel.classList.remove("bg-violet-600");
+    outputLabel.classList.remove("bg-gray-600");
+    outputLabel.classList.add("bg-violet-600");
   };
 
   const runCode = () => {
     const lang = document.getElementById("languageOptions").value;
+    toast.error("Error");
     const input = document.getElementById("input").value;
     const code = codeRef.current;
-
     toast.loading("Running Code....");
 
     const encodedParams = new URLSearchParams();
@@ -190,22 +193,60 @@ const EditorPage = () => {
     }
   };
 
+  const toggleSidebar = () => {
+        setIsOpen(!isOpen);
+    };
+
   return (
     <div className="mainWrap">
-      {/* <div className="asideWrap">
-        <div className="asideInner">
-          <div className="logo">
+      {/* Navbar */}
+      <nav className='mx-2 flex justify-between'>
+        <div className="logo">
             <img className="logoImage" src="/code-sync.png" alt="logo" />
-          </div>
-          <h3>Connected</h3>
+        </div>
+        <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" onClick={toggleSidebar}>
+               <span className="sr-only">Open sidebar</span>
+          {
+            !isOpen ? 
+            <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+               <path d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
+              </svg>
+              : 
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+
+               }
+        </button>
+      </nav>
+      
+      <div>
+            {
+                isOpen ? (
+                    <div className="z-10 absolute p-3 bg-gray-700 w-full shadow-md rounded-md">
+        <div className="asideInner">
+          <h3 className="font-bold text-white text-lg">Connected</h3>
           <div className="clientsList">
             {clients.map((client) => (
               <Client key={client.socketId} username={client.username} />
             ))}
           </div>
-        </div>
-        <label>
-          Select Language:
+              </div>
+              
+              {/* Disable comments to display language options  */}
+        {/* <label>
+          <span className="text-lg text-white font-bold mt-2">Select Language:</span>
           <select id="languageOptions" className="seLang" defaultValue="17">
             <option value="1">C#</option>
             <option value="4">Java</option>
@@ -213,29 +254,21 @@ const EditorPage = () => {
             <option value="6">C (gcc)</option>
             <option value="7">C++ (gcc)</option>
             <option value="8">PHP</option>
-            <option value="11">Haskell</option>
-            <option value="12">Ruby</option>
-            <option value="13">Perl</option>
             <option value="17">Javascript</option>
-            <option value="20">Golang</option>
-            <option value="21">Scala</option>
-            <option value="37">Swift</option>
-            <option value="38">Bash</option>
             <option value="43">Kotlin</option>
             <option value="60">TypeScript</option>
           </select>
-        </label>
-        <button className="btn runBtn" onClick={runCode}>
-          Run Code
-        </button>
+        </label> */}
         <button className="btn copyBtn" onClick={copyRoomId}>
           Copy ROOM ID
         </button>
         <button className="btn leaveBtn" onClick={leaveRoom}>
           Leave
         </button>
-      </div> */}
-
+      </div>
+                ) : ''
+            }
+      </div>
       <div className="editorWrap">
         <Editor
           socketRef={socketRef}
@@ -244,29 +277,37 @@ const EditorPage = () => {
             codeRef.current = code;
           }}
         />
-        <div className="IO-container">
-          <label
-            id="inputLabel"
-            className="clickedLabel"
-            onClick={inputClicked}
-          >
-            Input
-          </label>
-          <label
-            id="outputLabel"
-            className="notClickedLabel"
-            onClick={outputClicked}
-          >
-            Output
-          </label>
+        
+        {/* Remove comment to display input output and run code button */}
+        {/* <div className=" flex items-center justify-between">
+          <div>
+            <label
+              id="inputLabel"
+              className="bg-violet-600 px-4 py-1  m-1 text-white font-bold rounded-md"
+              onClick={inputClicked}
+            >
+              Input
+            </label>
+            <label
+              id="outputLabel"
+              className="bg-gray-600 px-4 py-1  m-1 text-white font-bold rounded-md"
+              onClick={outputClicked}
+            >
+              Output
+            </label>
+          </div>
+          <button className="bg-violet-600 px-4 py-1  m-1 text-white font-bold rounded-md" onClick={runCode}>
+          Run Code
+        </button>
         </div>
         <textarea
           id="input"
           className="inputArea textarea-style"
           placeholder="Enter your input here"
-        ></textarea>
+        ></textarea> */}
       </div>
 
+      {/* Disable comment to enable chat feature */}
       {/* <div className="chatWrap">
         <textarea
           id="chatWindow"

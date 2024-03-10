@@ -47,7 +47,7 @@ const Home = () => {
         <div className="inputGroup">
           <input
             type="text"
-            className="inputBox"
+            className="inputBox text-gray-800"
             placeholder="ROOM ID"
             onChange={(e) => setRoomId(e.target.value)}
             value={roomId}
@@ -55,7 +55,7 @@ const Home = () => {
           />
           <input
             type="text"
-            className="inputBox"
+            className="inputBox text-gray-800"
             placeholder="USERNAME"
             onChange={(e) => setUsername(e.target.value)}
             value={username}
