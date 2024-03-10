@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import ACTIONS from "../Actions";
 import Client from "../components/Client";
 import Editor from "../components/Editor";
-import Navbar from "../components/Navbar";
 import { initSocket } from "../socket";
 import {
   Navigate,
@@ -12,7 +11,6 @@ import {
 } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import axios from "axios";
-import Drawer from "../components/Drawer";
 
 const EditorPage = () => {
   const socketRef = useRef(null);
