@@ -20,6 +20,8 @@ const EditorPage = () => {
   const { roomId } = useParams();
   const [clients, setClients] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState("17"); // Default value set to "17" for JavaScript
+  const [inputCode, setInputCode] = useState("17"); // Default value set to "17" for JavaScript
 
   useEffect(() => {
     const init = async () => {
@@ -127,10 +129,19 @@ const EditorPage = () => {
   };
 
   const runCode = () => {
-    const lang = document.getElementById("languageOptions").value;
-    toast.error("Error");
+    const lang = selectedLanguage;
+    if (!lang) {
+      alert('Select a langauge');
+      return 
+    }
     const input = document.getElementById("input").value;
+    
     const code = codeRef.current;
+    if (!code?.trim()) {
+      toast.error("Input code can't be empty!");
+      return
+    }
+
     toast.loading("Running Code....");
 
     const encodedParams = new URLSearchParams();
@@ -148,8 +159,6 @@ const EditorPage = () => {
       },
       data: encodedParams,
     };
-
-    console.log(options);
 
     axios
       .request(options)
@@ -243,9 +252,9 @@ const EditorPage = () => {
               </div>
               
               {/* Disable comments to display language options  */}
-        {/* <label>
+        <label>
           <span className="text-lg text-white font-bold mt-2">Select Language:</span>
-          <select id="languageOptions" className="seLang" defaultValue="17">
+                <select id="languageOptions" className="seLang" defaultValue={selectedLanguage} onChange={(event) => setSelectedLanguage(event.target.value)}>
             <option value="1">C#</option>
             <option value="4">Java</option>
             <option value="5">Python</option>
@@ -256,7 +265,7 @@ const EditorPage = () => {
             <option value="43">Kotlin</option>
             <option value="60">TypeScript</option>
           </select>
-        </label> */}
+        </label>
         <button className="btn copyBtn" onClick={copyRoomId}>
           Copy ROOM ID
         </button>
@@ -277,7 +286,7 @@ const EditorPage = () => {
         />
         
         {/* Remove comment to display input output and run code button */}
-        {/* <div className=" flex items-center justify-between">
+        <div className=" flex items-center justify-between">
           <div>
             <label
               id="inputLabel"
@@ -302,7 +311,8 @@ const EditorPage = () => {
           id="input"
           className="inputArea textarea-style"
           placeholder="Enter your input here"
-        ></textarea> */}
+          rows={7}
+        ></textarea>
       </div>
 
       {/* Disable comment to enable chat feature */}
