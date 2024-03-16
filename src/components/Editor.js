@@ -51,7 +51,7 @@ const Editor = ({ socketRef, roomId, onCodeChange }) => {
     };
   }, [socketRef.current]);
 
-  return <textarea id="realtimeEditor"></textarea>;
+  return <textarea id="realtimeEditor" className="rounded-md border-white"></textarea>;
 };
 
 export default Editor;
