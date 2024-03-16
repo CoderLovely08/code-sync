@@ -199,7 +199,6 @@ footer a:hover {
   font-size: 16px;
   border: 1px solid transparent;
   min-height: calc(85vh);
-  height: calc(92vh);
 }
 
 .sendChatWrap {

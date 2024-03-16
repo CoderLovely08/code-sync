@@ -348,7 +348,7 @@ const EditorPage = () => {
       {/* Disable comment to enable chat feature */}
       <div
         className={`flex flex-col overflow-hidden ${
-          isChatOpen ? "max-h-screen" : "max-h-0"
+          isChatOpen ? "max-h-svh" : "max-h-0"
         } duration-300 absolute top-16 transition-all w-full bg-gray-900`}
       >
         <textarea
