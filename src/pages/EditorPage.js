@@ -271,7 +271,7 @@ const EditorPage = () => {
             </div>
 
             {/* Disable comments to display language options  */}
-            <label>
+            {/* <label>
               <span className="text-lg text-white font-bold mt-2">
                 Select Language:
               </span>
@@ -291,7 +291,7 @@ const EditorPage = () => {
                 <option value="43">Kotlin</option>
                 <option value="60">TypeScript</option>
               </select>
-            </label>
+            </label> */}
             <button className="btn copyBtn" onClick={copyRoomId}>
               Copy ROOM ID
             </button>
@@ -314,7 +314,7 @@ const EditorPage = () => {
 
         {/* Remove comment to display input output and run code button */}
         <div className=" flex items-center justify-between">
-          <div>
+          <div className="my-2">
             <label
               id="inputLabel"
               className="bg-violet-600 px-4 py-1  m-1 text-white font-bold rounded-md"
@@ -330,12 +330,12 @@ const EditorPage = () => {
               Output
             </label>
           </div>
-          <button
+          {/* <button
             className="bg-violet-600 px-4 py-1  m-1 text-white font-bold rounded-md"
             onClick={runCode}
           >
             Run Code
-          </button>
+          </button> */}
         </div>
         <textarea
           id="input"
