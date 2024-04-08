@@ -11,7 +11,8 @@ const Home = () => {
 
   const createNewRoom = (e) => {
     e.preventDefault();
-    const id = uuidV4();
+    const id = uuidV4().split("-")[0];
+
     setRoomId(id);
     toast.success("Created a new room");
   };
